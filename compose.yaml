@@ -1,0 +1,34 @@
+services:
+  mongodb:
+    image: 'mongo:latest'
+    container_name: 'mongo-db'
+    hostname: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: cqrs
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_INITDB_ROOT_USERNAME: root
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - cqrs
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    networks:
+      - cqrs
+
+networks:
+  cqrs:
+    driver: bridge
+volumes:
+  mongodb_data:
