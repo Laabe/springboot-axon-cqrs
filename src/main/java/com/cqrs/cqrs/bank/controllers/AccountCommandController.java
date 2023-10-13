@@ -23,19 +23,13 @@ public class AccountCommandController {
         return accountCommandService.createAccount(accountCreateDTO);
     }
 
-    @PutMapping(value = "/credits/{accountNumber}")
-    public CompletableFuture<String> creditMoneyToAccount(
-            @PathVariable(value = "accountNumber") String accountNumber,
-            @RequestBody MoneyCreditDTO moneyCreditDTO
-    ) {
-        return accountCommandService.creditMoneyToAccount(accountNumber, moneyCreditDTO);
+    @PutMapping("/credits")
+    public CompletableFuture<String> creditMoneyToAccount(@RequestBody MoneyCreditDTO moneyCreditDTO) {
+        return accountCommandService.creditMoneyToAccount(moneyCreditDTO);
     }
 
-    @PutMapping(value = "/debits/{accountNumber}")
-    public CompletableFuture<String> debitMoneyFromAccount(
-            @PathVariable(value = "accountNumber") String accountNumber,
-            @RequestBody MoneyDebitDTO moneyDebitDTO
-    ) {
-        return accountCommandService.debitMoneyFromAccount(accountNumber, moneyDebitDTO);
+    @PutMapping("/debits")
+    public CompletableFuture<String> debitMoneyFromAccount(@RequestBody MoneyDebitDTO moneyDebitDTO) {
+        return accountCommandService.debitMoneyFromAccount(moneyDebitDTO);
     }
 }

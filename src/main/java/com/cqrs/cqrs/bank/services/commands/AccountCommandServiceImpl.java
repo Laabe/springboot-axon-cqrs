@@ -29,10 +29,10 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     }
 
     @Override
-    public CompletableFuture<String> creditMoneyToAccount(String accountNumber, MoneyCreditDTO moneyCreditDTO) {
+    public CompletableFuture<String> creditMoneyToAccount(MoneyCreditDTO moneyCreditDTO) {
         return commandGateway.send(
                 new CreditMoneyCommand(
-                        accountNumber,
+                        moneyCreditDTO.getAccountId(),
                         moneyCreditDTO.getCreditAmount(),
                         moneyCreditDTO.getCurrency()
                 )
@@ -40,10 +40,10 @@ public class AccountCommandServiceImpl implements AccountCommandService {
     }
 
     @Override
-    public CompletableFuture<String> debitMoneyFromAccount(String accountNumber, MoneyDebitDTO moneyDebitDTO) {
+    public CompletableFuture<String> debitMoneyFromAccount(MoneyDebitDTO moneyDebitDTO) {
         return commandGateway.send(
                 new DebitMoneyCommand(
-                        accountNumber,
+                        moneyDebitDTO.getAccountId(),
                         moneyDebitDTO.getDebitAmount(),
                         moneyDebitDTO.getCurrency()
                 )

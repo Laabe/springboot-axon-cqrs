@@ -27,8 +27,43 @@ services:
     networks:
       - cqrs
 
+  axon-server:
+    # docker run -d --name my-axon-server -p 8024:8024 -p 8124:8124 axoniq/axonserver
+    image: axoniq/axonserver
+    container_name: axon-server
+    volumes:
+      - axonserver-data:/data
+      - axonserver-events:/eventdata
+      - axonserver-config:/config:ro
+    healthcheck:
+      test: curl -f http://localhost:8024/actuator/health || exit 1;
+    ports:
+      - 8024:8024
+      - 8124:8124
+    networks:
+      - cqrs
+
 networks:
   cqrs:
     driver: bridge
+
 volumes:
   mongodb_data:
+  axonserver-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data
+      o: bind
+  axonserver-events:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/events
+      o: bind
+  axonserver-config:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/config
+      o: bind
