@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document
+@Document("accounts")
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountQueryDocument {
